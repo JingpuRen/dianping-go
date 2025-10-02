@@ -1,0 +1,8 @@
+/.idea/.gitignore
+/.idea/dianping-go.iml
+/.idea/modules.xml
+/.idea/vcs.xml
+/.idea/dataSources.xml
+/.idea/sqldialects.xml
+
+dianping.log
