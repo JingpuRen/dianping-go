@@ -2,15 +2,15 @@ package user
 
 import (
 	"context"
+	"dianping-go/dal/model"
+	"dianping-go/dal/query"
+	"dianping-go/db"
+	"dianping-go/middleware"
+	"dianping-go/pkg/response"
 	"errors"
 	"log/slog"
 	"math/rand"
 	"regexp"
-	"review/dal/model"
-	"review/dal/query"
-	"review/db"
-	"review/middleware"
-	"review/pkg/response"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -48,7 +48,7 @@ func SendCode(c *gin.Context) {
 	}
 
 	response.Success(c, gin.H{"code": code})
-	//真实环境是调用短信服务商API（如阿里云、腾讯云短信服务）发送验证码到用户手机,不是直接在http请求中返回数据的。
+	// 真实环境是调用短信服务商API（如阿里云、腾讯云短信服务）发送验证码到用户手机,不是直接在http请求中返回数据的。
 	// 生产环境完整流程：
 	// 1. 验证手机号格式和频率限制
 	// 2. 生成6位随机验证码

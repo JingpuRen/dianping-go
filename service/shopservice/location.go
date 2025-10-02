@@ -2,13 +2,13 @@ package shopservice
 
 import (
 	"context"
+	"dianping-go/dal/model"
+	"dianping-go/dal/query"
+	"dianping-go/db"
+	"dianping-go/pkg/response"
 	"errors"
 	"fmt"
 	"log/slog"
-	"review/dal/model"
-	"review/dal/query"
-	"review/db"
-	"review/pkg/response"
 	"strconv"
 	"strings"
 

@@ -2,16 +2,17 @@ package main
 
 import (
 	"context"
+	"dianping-go/config"
+	"dianping-go/db"
+	"dianping-go/pkg/logger"
+	"dianping-go/pkg/rocketmq"
+	"dianping-go/router"
+	"dianping-go/service/order"
 	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
-	"review/config"
-	"review/db"
-	"review/handler/mq"
-	"review/pkg/logger"
-	"review/router"
 	"syscall"
 	"time"
 
@@ -36,7 +37,21 @@ func init() {
 		panic(err)
 	}
 
-	mq.StartStream()
+	// 初始化RocketMQ生产者和消费者
+	err = rocketmq.InitProducer()
+	if err != nil {
+		panic(err)
+	}
+
+	// 设置订单处理器
+	rocketmq.SetOrderHandler(func(ctx context.Context, voucherId, userId, orderId int64) error {
+		return order.CreateOrder(int(voucherId), int(userId), int(orderId))
+	})
+
+	err = rocketmq.InitConsumer()
+	if err != nil {
+		panic(err)
+	}
 }
 
 func main() {
@@ -68,5 +83,10 @@ func main() {
 	if err := server.Shutdown(ctx); err != nil {
 		panic(err)
 	}
+
+	// 优雅关闭RocketMQ
+	rocketmq.ShutdownProducer()
+	rocketmq.ShutdownConsumer()
+
 	fmt.Println("server shutdown success")
 }

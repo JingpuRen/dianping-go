@@ -11,17 +11,23 @@ log :
   MaxAge    : 30 #保留的最大天数
 mysql:
   Username: root   # 填写你的数据库账号
-  Password: 123456 # 填写你的数据库密码
+  Password: 666666 # 填写你的数据库密码
   Host: 127.0.0.1:3306
   DBName: dianping
   MaxIdleConns: 30
   MaxOpenConns: 100
 redis:
   host: 127.0.0.1:6379
-  password: 123456
+  password: ""
   db: 0
   poolSize: 50
 JWT:
   Secret: hello
   Issuer: review-service
   Expire: 7200s  #带单位
+rocketmq:
+  nameServer: 127.0.0.1:9876  # RocketMQ NameServer地址
+  producerGroup: seckill-producer-group  # 生产者组名
+  consumerGroup: seckill-consumer-group  # 消费者组名
+  topic: seckill-order-topic  # Topic名称
+  maxReconsumeTimes: 3  # 最大重试次数

@@ -1,7 +1,7 @@
 package shopservice
 
 import (
-	"review/dal/model"
+	"dianping-go/dal/model"
 	"strings"
 )
 

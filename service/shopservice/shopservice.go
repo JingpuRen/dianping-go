@@ -2,12 +2,12 @@ package shopservice
 
 import (
 	"context"
+	"dianping-go/dal/model"
+	"dianping-go/dal/query"
+	"dianping-go/db"
+	"dianping-go/pkg/consts"
+	"dianping-go/pkg/response"
 	"log/slog"
-	"review/dal/model"
-	"review/dal/query"
-	"review/db"
-	"review/pkg/consts"
-	"review/pkg/response"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

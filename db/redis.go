@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"review/config"
+	"dianping-go/config"
 
 	"github.com/go-redsync/redsync/v4"
 	"github.com/go-redsync/redsync/v4/redis/goredis/v9"

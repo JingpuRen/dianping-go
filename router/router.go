@@ -1,12 +1,12 @@
 package router
 
 import (
-	"review/handler/blog"
-	"review/handler/order"
-	"review/handler/shopservice"
-	"review/handler/user"
-	"review/middleware"
-	"review/pkg/response"
+	"dianping-go/middleware"
+	"dianping-go/pkg/response"
+	"dianping-go/service/blog"
+	"dianping-go/service/order"
+	"dianping-go/service/shopservice"
+	"dianping-go/service/user"
 
 	"github.com/gin-gonic/gin"
 )

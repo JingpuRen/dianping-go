@@ -1,7 +1,7 @@
 package blog
 
 import (
-	"review/dal/model"
+	"dianping-go/dal/model"
 	"strings"
 	"time"
 )

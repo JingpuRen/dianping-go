@@ -1,9 +1,9 @@
 package config
 
 import (
+	"dianping-go/pkg/logger"
+	"dianping-go/pkg/mail"
 	"log/slog"
-	"review/pkg/logger"
-	"review/pkg/mail"
 	"time"
 
 	"github.com/fsnotify/fsnotify"
@@ -11,12 +11,13 @@ import (
 )
 
 var (
-	ServerOption *ServerSetting
-	MysqlOption  *MysqlSetting
-	LogOption    *logger.LogSetting
-	RedisOption  *RedisSetting
-	JwtOption    *JWTSetting
-	MailOption   *mail.MailSetting
+	ServerOption   *ServerSetting
+	MysqlOption    *MysqlSetting
+	LogOption      *logger.LogSetting
+	RedisOption    *RedisSetting
+	JwtOption      *JWTSetting
+	MailOption     *mail.MailSetting
+	RocketMQOption *RocketMQSetting
 )
 
 type ServerSetting struct {
@@ -45,6 +46,14 @@ type JWTSetting struct {
 	Secret string
 	Issuer string
 	Expire time.Duration
+}
+
+type RocketMQSetting struct {
+	NameServer        string
+	ProducerGroup     string
+	ConsumerGroup     string
+	Topic             string
+	MaxReconsumeTimes int32
 }
 
 func ReadConfigFile(path string) error {
@@ -122,6 +131,10 @@ func InitConfig(path string) {
 		panic(err)
 	}
 	err = ReadSection("mail", &MailOption)
+	if err != nil {
+		panic(err)
+	}
+	err = ReadSection("rocketmq", &RocketMQOption)
 	if err != nil {
 		panic(err)
 	}

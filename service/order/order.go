@@ -2,11 +2,12 @@ package order
 
 import (
 	"context"
+	"dianping-go/dal/model"
+	"dianping-go/dal/query"
+	"dianping-go/db"
+	"dianping-go/pkg/response"
+	"dianping-go/pkg/rocketmq"
 	"log/slog"
-	"review/dal/model"
-	"review/dal/query"
-	"review/db"
-	"review/pkg/response"
 	"strconv"
 	"time"
 
@@ -64,11 +65,16 @@ func SeckillVoucher(c *gin.Context) {
 			e = "order already exist"
 		}
 		response.Error(c, response.ErrDatabase, e)
+		return
 	}
 
-	//判断一人一单已经在redis中完成，接下来是生成订单，所以不需要加锁了
-	// orderId, err := createVoucherOrder(orderId, req)
-	// go createVoucherOrder(orderId, req)
+	// 发送RocketMQ消息进行异步订单处理
+	err = rocketmq.SendOrderMessage(c.Request.Context(), req.VoucherId, req.UserId, int(orderId))
+	if err != nil {
+		slog.Error("Failed to send order message to RocketMQ", "err", err)
+		response.Error(c, response.ErrDatabase, "Failed to create order")
+		return
+	}
 
 	response.Success(c, gin.H{"orderId": orderId})
 }
