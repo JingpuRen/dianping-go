@@ -2,12 +2,12 @@ package user
 
 import (
 	"context"
+	"dianping-go/dal/query"
+	"dianping-go/db"
+	"dianping-go/pkg/consts"
+	"dianping-go/pkg/response"
 	"errors"
 	"log/slog"
-	"review/dal/query"
-	"review/db"
-	"review/pkg/consts"
-	"review/pkg/response"
 	"strconv"
 	"time"
 

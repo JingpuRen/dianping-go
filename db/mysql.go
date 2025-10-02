@@ -1,9 +1,9 @@
 package db
 
 import (
+	"dianping-go/config"
+	"dianping-go/dal/query"
 	"fmt"
-	"review/config"
-	"review/dal/query"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

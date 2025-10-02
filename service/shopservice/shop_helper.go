@@ -2,18 +2,18 @@ package shopservice
 
 import (
 	"context"
+	"dianping-go/dal/model"
+	"dianping-go/dal/query"
+	"dianping-go/db"
+	"dianping-go/pkg/response"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
 	"math/rand"
-	"review/dal/model"
-	"review/dal/query"
-	"review/db"
-	"review/pkg/response"
 	"strconv"
 	"time"
 
-	"github.com/bytedance/sonic"
 	"github.com/redis/go-redis/v9"
 	"golang.org/x/sync/singleflight"
 	"gorm.io/gorm"
@@ -33,7 +33,7 @@ func getShopFromCache(id string) (*model.TbShop, error) {
 	}
 
 	var shop model.TbShop
-	err = sonic.Unmarshal([]byte(val), &shop)
+	err = json.Unmarshal([]byte(val), &shop)
 	if err != nil {
 		return nil, err
 	}
@@ -56,9 +56,9 @@ func setShopToCache(id string, shop *model.TbShop) error {
 	var data []byte //无论是nil切片还是[]byte("")，在Redis中都会被存储为空字符串
 	if shop != nil {
 		var err error
-		data, err = sonic.Marshal(shop)
+		data, err = json.Marshal(shop)
 		if err != nil {
-			slog.Error("sonic marshal error", "error", err)
+			slog.Error("json marshal error", "error", err)
 			return err
 		}
 	}
@@ -81,9 +81,9 @@ func getShopTypeFromCache() ([]*model.TbShopType, error) {
 	shopTypes := make([]*model.TbShopType, 0, len(val))
 	for _, v := range val {
 		var shopType model.TbShopType
-		err = sonic.UnmarshalString(v, &shopType)
+		err = json.Unmarshal([]byte(v), &shopType)
 		if err != nil {
-			slog.Error("sonic unmarshal error", "error", err)
+			slog.Error("json unmarshal error", "error", err)
 			continue
 		}
 		shopTypes = append(shopTypes, &shopType)
@@ -103,9 +103,9 @@ func setShopTypeToCache(shopTypes []*model.TbShopType) {
 	pipeline.Del(context.Background(), shopTypeKey)
 
 	for _, shopType := range shopTypes {
-		val, err := sonic.Marshal(shopType)
+		val, err := json.Marshal(shopType)
 		if err != nil {
-			slog.Error("sonic marshal error", "error", err)
+			slog.Error("json marshal error", "error", err)
 			continue
 		}
 		pipeline.RPush(context.Background(), shopTypeKey, string(val))

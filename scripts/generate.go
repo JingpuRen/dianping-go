@@ -1,8 +1,8 @@
 package main
 
 import (
-	"review/config"
-	"review/db"
+	"dianping-go/config"
+	"dianping-go/db"
 
 	"github.com/spf13/pflag"
 	"gorm.io/gen"

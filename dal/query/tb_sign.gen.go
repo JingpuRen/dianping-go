@@ -17,7 +17,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"review/dal/model"
+	"dianping-go/dal/model"
 )
 
 func newTbSign(db *gorm.DB, opts ...gen.DOOption) tbSign {
