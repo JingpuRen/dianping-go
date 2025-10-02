@@ -1,0 +1,3 @@
+{"time":"2025-10-02T17:46:11.6159081+08:00","level":"INFO","source":{"function":"main.init.0","file":"D:/GolandProjects/dianping-go/main.go","line":28},"msg":"config init success"}
+{"time":"2025-10-02T17:46:11.6339402+08:00","level":"INFO","source":{"function":"dianping-go/pkg/rocketmq.InitProducer","file":"D:/GolandProjects/dianping-go/pkg/rocketmq/producer.go","line":42},"msg":"RocketMQ producer started successfully"}
+{"time":"2025-10-02T17:46:11.6406779+08:00","level":"INFO","source":{"function":"dianping-go/pkg/rocketmq.InitConsumer","file":"D:/GolandProjects/dianping-go/pkg/rocketmq/consumer.go","line":73},"msg":"RocketMQ consumer started successfully","topic":"seckill-order-topic","consumerGroup":"seckill-consumer-group"}
